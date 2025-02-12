@@ -15,14 +15,14 @@ The system will consist of the following components:
 
 3. **Database:**
    - Stores payment transactions, client subscription details, and logs.
-   - Use a relational database (e.g., PostgreSQL, MySQL) for structured data.
+   - Use a relational database for structured data.
 
 4. **Authentication and Authorization Service:**
    - Ensures secure access to the payment gateway and subscription management APIs.
-   - Uses OAuth2 or JWT for token-based authentication.
+   - Uses token-based authentication.
 
 5. **Third-Party PSP API:**
-   - External service for processing payments (e.g., Stripe, PayPal, Adyen).
+   - External service for processing payments (e.g., Stripe, Jenga, PesaPal).
 
 6. **Client Applications (Ten Apps):**
    - Integrate with the Payment Gateway Service and Subscription Management Service to process payments and check subscription statuses.
@@ -61,9 +61,9 @@ The system will consist of the following components:
   - `POST /webhook`: Handle PSP callbacks.
 
 - **Tech Stack:**
-  - Backend: Node.js, Python (Flask/Django), or Java (Spring Boot).
-  - Database: PostgreSQL or MySQL.
-  - Messaging: RabbitMQ or Kafka for async processing (optional).
+  - Backend:  Python (Django).
+  - Database: PostgreSQL.
+  - Messaging: RabbitMQ for async processing.
 
 #### **2.2. Subscription Management Service (SMS)**
 - **Responsibilities:**
@@ -74,31 +74,26 @@ The system will consist of the following components:
 - **APIs:**
   - `GET /subscriptions/{client_id}`: Check if a client has paid.
   - `POST /subscriptions`: Create or update a subscription.
-  - `DELETE /subscriptions/{id}`: Cancel a subscription.
+  - `PUT /subscriptions/{id}`: Cancel a subscription.
 
 - **Tech Stack:**
   - Backend: Same as PGS for consistency.
-  - Database: Shared with PGS or a separate database for scalability.
+  - Database: Shared with PGS.
 
 #### **2.3. Database Design**
-- **Tables:**
-  - `payments`: Stores payment transactions (id, client_id, amount, status, timestamp).
-  - `subscriptions`: Stores subscription details (id, client_id, start_date, end_date, status).
-  - `clients`: Stores client information (id, name, email, app_id).
+- **Entity Relational diagram:**
+<https://drawsql.app/teams/kagus/diagrams/payment-gateway>
 
-- **Relationships:**
-  - One client can have multiple payments.
-  - One client can have one active subscription.
 
 #### **2.4. Authentication and Authorization**
-- Use OAuth2 or JWT for secure API access.
+- Use API Tokens for secure API access.
 - Each client app must authenticate before accessing PGS or SMS APIs.
 - Implement role-based access control (e.g., admin, app, client).
 
 #### **2.5. Third-Party PSP Integration**
 - Use the PSP's SDK or REST API for payment processing.
 - Implement webhooks to handle payment status updates.
-- Ensure secure communication (HTTPS, API keys, etc.).
+- Ensure secure communication (HTTPS, API keys,).
 
 ---
 
@@ -134,7 +129,7 @@ The system will consist of the following components:
 - Test edge cases (e.g., failed payments, expired subscriptions).
 
 #### **3.5. Phase 5: Deployment**
-- Deploy the services to a cloud platform (e.g., AWS, Azure, GCP).
+- Deploy the services to a cloud platform (e.g., AWS, Azure, DigitalOcean).
 - Set up monitoring and logging (e.g., Prometheus, Grafana, ELK stack).
 - Implement CI/CD pipelines for automated deployments.
 
@@ -149,7 +144,7 @@ The system will consist of the following components:
 - **Scalability:**
   - Use load balancers and auto-scaling for high availability.
   - Cache frequently accessed data (e.g., subscription statuses) using Redis or Memcached.
-  - Use a message queue (e.g., RabbitMQ, Kafka) for async processing.
+  - Use a message queue (e.g., RabbitMQ, ) for async processing.
 
 - **Security:**
   - Encrypt sensitive data (e.g., payment details) in the database.
@@ -159,14 +154,13 @@ The system will consist of the following components:
 ---
 
 ### **5. Tech Stack Recommendations**
-- **Backend:** Node.js, Python (Flask/Django), or Java (Spring Boot).
-- **Database:** PostgreSQL or MySQL.
-- **Caching:** Redis or Memcached.
-- **Messaging:** RabbitMQ or Kafka.
-- **Cloud Platform:** AWS, Azure, or GCP.
-- **Monitoring:** Prometheus, Grafana, ELK stack.
+- **Backend:** Python (Django).
+- **Database:** PostgreSQL.
+- **Caching:** Redis.
+- **Messaging:** RabbitMQ .
+- **Cloud Platform:** Digital Ocean.
+- **Monitoring:** Sentry.
 
 ---
 
-This architecture and plan should provide a robust and scalable payment gateway system for your ten apps. Let me know if you need further details or assistance!
 
